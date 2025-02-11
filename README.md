@@ -83,4 +83,4 @@ This project is **open-source** under the [MIT License](LICENSE).
 $ echo "Powered by Laravel ❤️"
 ```
 
-🚀 _Built with passion & coffee by [Your Name](https://github.com/your-username)_
+🚀 _Built with passion & coffee by [Hassan Zahid](https://github.com/codeartsbyhassan)_
