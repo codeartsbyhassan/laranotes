@@ -68,4 +68,12 @@ class NoteController extends Controller
 
         return redirect()->route('notes.index')->with('success', 'Note deleted successfully.');
     }
+    public function destroyAll(){
+        $notes = Note::all();
+        if ($notes->isNotEmpty()) {
+            Note::destroy($notes);
+            return redirect()->route('notes.index')->with('success', 'All notes deleted successfully.');
+        }
+        return redirect()->route('notes.index')->with('warning', 'No notes found.');
+    }
 }

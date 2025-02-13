@@ -62,6 +62,14 @@
             </div>
         @endif
 
+        @if(session('warning'))
+            <div id="warning-alert" class="alert alert-warning alert-dismissible fade show rounded-pill shadow-sm"
+                 role="alert">
+                ⚠️ {{ session('warning') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+
         <script>
             setTimeout(function() {
                 let successAlert = document.getElementById('success-alert');
@@ -78,7 +86,24 @@
                         }
                     }, 50);
                 }
-            }, 800); 
+            }, 800);
+
+            setTimeout(function() {
+                let warningAlert = document.getElementById('warning-alert');
+                if (warningAlert) {
+                    let fadeEffect = setInterval(function() {
+                        if (!warningAlert.style.opacity) {
+                            warningAlert.style.opacity = 1;
+                        }
+                        if (warningAlert.style.opacity > 0) {
+                            warningAlert.style.opacity -= 0.1;
+                        } else {
+                            clearInterval(fadeEffect);
+                            warningAlert.remove();
+                        }
+                    }, 50);
+                }
+            }, 800);
         </script>
 
         @if ($notes->isEmpty())
@@ -124,5 +149,22 @@
                 @endforeach
             </div>
         @endif
+
+        <div class="d-flex justify-content-end align-items-center mt-5">
+            <div class="text-center mt-5">
+                <form action="{{ route('notes.destroyAll') }}" method="POST" class="d-inline">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit"
+                            class="btn btn-danger px-4 py-2 d-flex align-items-center gap-2"
+                            style="background-color: #ee3f3f; border-color: #ee3f3f; border-radius: 40px"
+                            onclick="return confirm('⚠️ Warning: This will permanently delete ALL notes. This action cannot be undone. Are you sure you want to continue?');">
+                        <i class="bi bi-trash"></i>
+                        🗑 Delete All Notes
+                    </button>
+                </form>
+            </div>
+        </div>
     </div>
+
 @endsection
